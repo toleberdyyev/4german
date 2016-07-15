@@ -13,5 +13,20 @@
 
             <h1>{{ post.title }}</h1>
             <p>{{ post.text|linebreaksbr }}</p>
+            <hr>
+            comments bellow ...
+            <hr>
+                <div id="comments_content">
+                {% for comment in post.comments.all %}
+                <p> <b>{{ comment.author }}</b>:{{ comment.text }} </p>
+                {% endfor %}
+                </div>
+                <form method="POST" class="post-form" id='comment'>
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="g-recaptcha" data-sitekey="6Lfl7SQTAAAAAD2lwLcOEqN70fLMlNvjvKb4ZZB3" id='gogl_captcha'></div>
+                <button type="submit" id = "search" class="save btn btn-default">Save</button>
+                </form>
         </div>
     {% endblock %}

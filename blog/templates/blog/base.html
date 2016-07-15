@@ -5,8 +5,10 @@
            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
            <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
        </head>
        <body>
+          <script src='https://www.google.com/recaptcha/api.js'></script>
        <div class="page-header">
              <a href="{% url 'blog.views.post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
            <h1><a href="/">Django blog by Alisher</a></h1>
@@ -19,5 +21,30 @@
                </div>
            </div>
        </div>
+
+       <script type="text/javascript">
+       var captcha = $("#gogl_captcha").html()
+       console.log(captcha.length)
+       $(document).ready(function(){
+         $('#comment').submit(function(){
+           var str=$(this).serialize()
+           var content = $('#comments_content').html()
+           var author = $('#id_author').val()
+           var text =$('#id_text').val()
+           var data_l="<p><b>"+String(author)+"</b>: "+String(text)+"</p>"
+           $.ajax({
+             type:'POST',
+             data:str,
+             success:function(html){
+               $('#comments_content').html(content+data_l);
+               console.log(captcha.length)
+             }
+       })
+           return false;
+
+         })
+       })
+
+       </script>
    </body>
    </html>
