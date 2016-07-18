@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'nocaptcha_recaptcha',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -102,3 +103,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+LOGIN_REDIRECT_URL = '/'
+NORECAPTCHA_SITE_KEY = '6LeNHCUTAAAAAOYahdU9Eynxj8uOaegIVOWLEBlr'
+NORECAPTCHA_SECRET_KEY = '6LeNHCUTAAAAANlht_Tj2CmipftD5jrPc9HJybN6'

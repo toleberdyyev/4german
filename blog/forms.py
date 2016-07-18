@@ -1,5 +1,6 @@
 from django import forms
 from .models import Post, Comment
+from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 class PostForm(forms.ModelForm):
 
@@ -9,6 +10,7 @@ class PostForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
 
+    captcha=NoReCaptchaField()
     class Meta:
         model = Comment
         fields = ('author', 'text',)

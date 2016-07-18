@@ -1,6 +1,7 @@
 var captcha = $("#gogl_captcha").html()
-console.log(captcha.length)
+console.log('hfhggh')
 $(document).ready(function(){
+  console.log("asdfg");
   $('#comment').submit(function(){
     var str=$(this).serialize()
     var content = $('#comments_content').html()
@@ -12,7 +13,8 @@ $(document).ready(function(){
       data:str,
       success:function(html){
         $('#comments_content').html(content+data_l);
-        console.log(captcha.length)
+        console.log(html.substring(1509,html.length))
+
         $('#id_author').val('')
         $('#id_text').val('')
       }
