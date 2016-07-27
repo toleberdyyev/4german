@@ -1,0 +1,15 @@
+{%if comment.get_children_count > 0%}
+        <ul>
+        {%for ch in comment.get_children %}
+        <a>
+          {{ ch.author}}
+        </a>
+        <p>
+          {{ ch.text }}
+        </p>
+             {%with comment=ch template_name="blog/comments.html" %}
+                  {%include template_name %}
+             {%endwith%}
+        {%endfor%}
+        </ul>
+{%endif%}

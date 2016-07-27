@@ -1,0 +1,13 @@
+{% for comment in comments %}
+<div class="comments_row">
+  <div class="comment_teach">
+<a>
+  {{ comment.author}}
+</a>
+<p>
+  {{ comment.text }}
+</p>
+</div>
+  {%include "blog/comments.html" %}
+</div>
+{% endfor %}

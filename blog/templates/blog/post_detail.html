@@ -1,11 +1,12 @@
 {% extends 'blog/base.html' %}
 
     {% block content %}
-        <div class="post">
+        <div class="post" id='{{ post.pk }}'>
+
            {% if user.is_authenticated %}
               {% if post.published_date %}
                 <div class="date">
-                  {{ post.published_date }}
+                  <a>{{ post.published_date }}</a>
                 </div>
               {% else %}
                 <a class="btn btn-default" href="{% url 'blog.views.post_publish' pk=post.pk %}">Publish</a>
@@ -13,26 +14,54 @@
             {% else %}
              <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
             {% endif %}
-          <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-          <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            {% if user.is_superuser or  user.username == post.author %}
+          <a class="btn btn-default red_btn" href="{% url 'post_remove' pk=post.pk %}" >Delete post</a>
+            {% endif %}
+          <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+          <hr>
+            <h4>Author: <a>{{ post.author}}</a></h2>
             <h1>{{ post.title }}</h1>
             <p>{{ post.text|linebreaksbr }}</p>
-            <hr>
-            comments bellow ...
-            <hr>
-                <div id="comments_content">
-                {% for comment in post.comments.all %}
-                <p style="float:right">{{ comment.created_date }}</p>
-                <p><b>{{ comment.author }}</b>:{{ comment.text }}</p>
-                {% endfor %}
+        </div>
+        <div id="comments_wall">
+                {% for comment in comments %}
+                <div class="comments_row">
+                  <div class="comment_teach">
+
+
+                <a>
+                  {{ comment.author}}
+                </a>
+                <p>
+                  {{ comment.text }}
+                </p>
+              </div>
+                  {%include "blog/comments.html" %}
                 </div>
-                <div id="foma-div" style='display:'>
-                  <form method="POST" class="post-form" id='comment'>
-                  {% csrf_token %}
-                  {{ form.as_p }}
-                  <div class="g-recaptcha" data-sitekey="6LeNHCUTAAAAAOYahdU9Eynxj8uOaegIVOWLEBlr"></div>
-                  <button type="submit" id = "search" class="save btn btn-default">Save</button>
+                {% endfor %}
+
+              </div>
+                {% if user.is_authenticated %}
+              <div class="post">
+                <div class="reply_form">
+                  <form class="post-form re_comment" id='reply_comment' >
+                    {% csrf_token %}
+                    {{ form_r.as_p }}
+                    <button type="button" name="button" id="re_cancel_btn">cancel</button>
+                    <button type="submit" name="button" id='re_comment_btn' style='display:none'>comment</button>
                   </form>
                 </div>
-        </div>
+                <div class="comment_form">
+                  <form class="post-form" id='comment'>
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit" id = "search" class="save btn btn-default grn_btn"  style="float:left !important">comment</button>
+                  </form>
+                </div>
+
+                  <br>
+                  </div>
+                  {% endif %}
+
+
     {% endblock %}

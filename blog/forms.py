@@ -13,4 +13,4 @@ class CommentForm(forms.ModelForm):
     captcha=NoReCaptchaField()
     class Meta:
         model = Comment
-        fields = ('author', 'text',)
+        fields = ('text','parent')

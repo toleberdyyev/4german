@@ -1,36 +1,77 @@
 {% load staticfiles %}
-   <html>
-       <head>
-           <title>ADP</title>
+<html>
+<head>
+           <title>TCB</title>
+           <link rel="shortcut icon" href="{% static 'img/icon.jpg' %}" type="image/jpg">
            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+           <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+           <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
            <link rel="stylesheet" href="{% static 'css/blog.css' %}">
            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
            <script src='https://www.google.com/recaptcha/api.js'></script>
            <link href='https://fonts.googleapis.com/css?family=Ubuntu&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
        </head>
 
-   <body>
-             <div class="page-header">
-         {% if user.is_authenticated %}
-         <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-         <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
-         <p class="top-menu">hello, {{ user.username }}<small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
-         {% else %}
-         <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
-         {% endif %}
-         <h1><a href="{% url 'blog.views.post_list' %}">TheCodeTimes</a></h1>
+   <body bgcolor='#eaeaeae'>
+
+     <div class="navbar navbar-default navbar-static-top" class="navbar" >
+        <div class="container">
+          <div class="navbar-header" >
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+
+              </button>
+           <a class="navbar-brand" href="{% url 'blog.views.post_list' %}"><h3 style="margin-top:-4px;">TheCodeBlogs</h3></a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              {% if user.is_authenticated %}
+              <li>
+                <a href="{% url 'blog.views.post_list' %}">My feed</a>
+              </li>
+               <li>
+                <a href="{% url 'blog.views.post_new' %}">new post</a>
+              </li>
+
+              <li class="active dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#337CBB;" id='username_author'>@{{ user.username }}</a>
+                <ul class="dropdown-menu" role="menu" style="border: hidden;">
+                  <li>
+                    <a href="{% url 'logout' %}">Log out</a>
+                  </li>
+                </ul>
+              </li>
+              {% else %}
+              <li>
+                <a href="{% url 'login' %}" >login</a>
+              </li>
+                {% endif %}
+            </ul>
+          </div>
         </div>
+      </div>
+    <div class="section">
       <div class="container">
        <div class="content">
            <div class="row">
-               <div class="col-md-8">
+               <div class="col-md-8 content_block">
                {% block content %}
                {% endblock %}
+               <div class="col-md-4">
+
                </div>
+               <br>
+               </div>
+               <br>
            </div>
        </div>
-           </div>
+      </div>
+    </div>
          <script src="{% static 'js/ajax.js' %}"></script>
    </body>
    </html>
